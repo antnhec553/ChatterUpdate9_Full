@@ -106,36 +106,44 @@ device-orientation-permission-ui="enabled">
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  const video1 = document.querySelector("#vid1");
-  const video2 = document.querySelector("#vid2");
-  const audio = document.querySelector("#aud1");
+  const video1 = document.querySelector("#vid1"); // flap 7
+  const video2 = document.querySelector("#vid2"); // flap 9
 
-  const videoTarget1 = document.querySelector('[mindar-image-target="targetIndex: 6"]');
-  const audioTarget = document.querySelector('[mindar-image-target="targetIndex: 7"]');
-  const videoTarget2 = document.querySelector('[mindar-image-target="targetIndex: 8"]');
+  const target7 = document.querySelector('[mindar-image-target="targetIndex: 6"]');
+  const target9 = document.querySelector('[mindar-image-target="targetIndex: 8"]');
 
-  // unlock audio on first tap
+  // 🔓 unlock videos on first tap (REQUIRED for mobile)
   document.body.addEventListener("click", () => {
-    audio.play().then(() => {
-      audio.pause();
-      audio.currentTime = 0;
+    video1.play().then(() => {
+      video1.pause();
+      video1.currentTime = 0;
+    });
+
+    video2.play().then(() => {
+      video2.pause();
+      video2.currentTime = 0;
     });
   }, { once: true });
 
-  // VIDEO 1
-  videoTarget1.addEventListener("targetFound", () => video1.play());
-  videoTarget1.addEventListener("targetLost", () => { video1.pause(); video1.currentTime = 0; });
+  // ▶️ FLAP 7 VIDEO
+  target7.addEventListener("targetFound", () => {
+    video1.play();
+  });
 
-  // AUDIO
-  audioTarget.addEventListener("targetFound", () => audio.play());
-  audioTarget.addEventListener("targetLost", () => { audio.pause(); audio.currentTime = 0; });
+  target7.addEventListener("targetLost", () => {
+    video1.pause();
+  });
 
-  // VIDEO 2
-  videoTarget2.addEventListener("targetFound", () => video2.play());
-  videoTarget2.addEventListener("targetLost", () => { video2.pause(); video2.currentTime = 0; });
+  // ▶️ FLAP 9 VIDEO
+  target9.addEventListener("targetFound", () => {
+    video2.play();
+  });
+
+  target9.addEventListener("targetLost", () => {
+    video2.pause();
+  });
 
 });
-</script>
 
 </body>
 </html>
